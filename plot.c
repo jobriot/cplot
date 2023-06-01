@@ -132,5 +132,6 @@ void scatter(gnuplot * plt, double xvals[], double yvals[], int dimension, char 
 		plt->datas[n-1].x[i] = xvals[i];
 	}
 	plt->datas[n-1].nargs = 0;
+	plt->datas[n-1].gplot_args = (char**) malloc(0);
 	add_arg(&(plt->datas[n-1]), args);
 }

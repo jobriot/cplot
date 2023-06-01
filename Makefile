@@ -1,5 +1,7 @@
+CC = gcc
+CFLAGS = -lm -D _GNU_SOURCE
 main:
-	cc -o main main.c plot.c
+	$(CC) $(CFLAGS) -o main main.c plot.c
 
 test: main
 	./main
