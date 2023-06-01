@@ -114,10 +114,14 @@ void draw_gnuplot(gnuplot * plt) {
 	free(stri);
 }
 
+void pplot(gnuplot * plt, double xvals[], double yvals[], int dimension, char * args) {
+	scatter(plt, xvals, yvals, dimension, args);
+	add_arg(&(plt->datas[plt->nb_data-1]), "with linespoints");
+}
 
 void plot(gnuplot * plt, double xvals[], double yvals[], int dimension, char * args) {
 	scatter(plt, xvals, yvals, dimension, args);
-	add_arg(&(plt->datas[plt->nb_data-1]), "with linespoints");
+	add_arg(&(plt->datas[plt->nb_data-1]), "with lines");
 }
 
 void scatter(gnuplot * plt, double xvals[], double yvals[], int dimension, char * args) {
