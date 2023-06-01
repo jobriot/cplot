@@ -31,7 +31,7 @@ int main(void) {
 	free(xr);
 	free(yr);
 
-	int d = 500;
+	int d = 50;
 	int b = 20;
 	double * no = malloc(d * sizeof(double));
 	for (int i=0; i<d; i++)
@@ -46,7 +46,7 @@ int main(void) {
 	double * xu = malloc(d * sizeof(double));
 	double * yu = malloc(d * sizeof(double));
 	for (int i=0; i<d; i++) {
-		xu[i] = 2 + normal_random() / 4;
+		xu[i] = -2 + normal_random() / 4;
 		yu[i] = 1.5 + normal_random() / 4;
 	}
 	scatter(plt, xu, yu, d, "title 'scattered normal random' pointtype 6 lc 9");
