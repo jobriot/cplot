@@ -25,6 +25,9 @@ plot(plt, xr, yr, dimr, "title 'gauss' dt 2 lc 'red' lw 2");
 
 free(xr);
 free(yr);
+
+draw_gnuplot(plt);
+killplot(plt);
 ```
 
 There are more usecases in main.c
