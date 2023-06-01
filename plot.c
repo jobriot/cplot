@@ -110,6 +110,7 @@ void draw_gnuplot(gnuplot * plt) {
 
 	}
 	set_margins(plt);
+	// fprintf(plt->process, "set style fill solid\n");
 	fprintf(plt->process, "%s\n", stri);
 	free(stri);
 }
@@ -138,4 +139,9 @@ void scatter(gnuplot * plt, double xvals[], double yvals[], int dimension, char 
 	plt->datas[n-1].nargs = 0;
 	plt->datas[n-1].gplot_args = (char**) malloc(0);
 	add_arg(&(plt->datas[n-1]), args);
+}
+
+void bar(gnuplot * plt, double xvals[], double yvals[], int dimension, char * args) {
+	scatter(plt, xvals, yvals, dimension, args);
+	add_arg(&(plt->datas[plt->nb_data-1]), "with boxes");
 }

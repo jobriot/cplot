@@ -10,12 +10,11 @@ double nor2(double x) {
 	return 2 * normal_cr(x);
 }
 
-int main(void) {
-	double x[5] = {1.0, 2.0, 3.0, 4.0, 5.0};
-	double y[5] = {5.0 ,3.0, 5.0, 3.0, 5.0};
-	double y2[5] = {3.0 ,5.0, 3.0, 5.0, 3.0};
-	int dim = 5;
+double cons(double x) {
+	return 2;
+}
 
+int main(void) {
 	int dimr = 50;
 
 	double * xr = linspace(-3, 3, dimr);
@@ -23,9 +22,6 @@ int main(void) {
 
 	gnuplot * plt = instanciatePlot();
 
-	// plot(plt, x, y, dim, "title 'W' pointtype 7 dt 2 lw 6");
-	// scatter(plt, x, y2, dim, "title 'M'");
-	// pplot(plt, xr, yr, dimr, "title 'gauss' pointtype 7");
 	plot(plt, xr, yr, dimr, "title 'gauss' dt 2 lc 'red' lw 2");
 
 	// wrong use of apply_func, the pointer should be freed, no way to do it here
@@ -34,6 +30,28 @@ int main(void) {
 
 	free(xr);
 	free(yr);
+
+	int d = 500;
+	int b = 20;
+	double * no = malloc(d * sizeof(double));
+	for (int i=0; i<d; i++)
+		no[i] = normal_random();
+	BIN nob = bin(no, d, b);
+	norm_bin(&nob);
+	// scatter(plt, nob.centered_bins, nob.values, nob.nb_bins, "title 'test' with boxes fill solid boxwidth 0.2");
+	// scatter(plt, nob.centered_bins, nob.values, nob.nb_bins, "title 'normal random' with boxes");
+	bar(plt, nob.centered_bins, nob.values, nob.nb_bins, "title 'normal random'");
+
+
+	double * xu = malloc(d * sizeof(double));
+	double * yu = malloc(d * sizeof(double));
+	for (int i=0; i<d; i++) {
+		xu[i] = 2 + normal_random() / 4;
+		yu[i] = 1.5 + normal_random() / 4;
+	}
+	scatter(plt, xu, yu, d, "title 'scattered normal random' pointtype 6 lc 9");
+
+
 	draw_gnuplot(plt);
 	killplot(plt);
 	return 0;

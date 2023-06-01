@@ -20,3 +20,4 @@ void draw_gnuplot(gnuplot *);
 void pplot(gnuplot *, double[], double[], int, char*);
 void plot(gnuplot *, double[], double[], int, char*);
 void scatter(gnuplot *, double[], double[], int, char*);
+void bar(gnuplot *, double[], double[], int, char*);

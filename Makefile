@@ -9,4 +9,5 @@ test: main
 clean:
 	rm -rf *.o main
 
-.PHONY: test clean
+# main just for convinience
+.PHONY: test clean main
