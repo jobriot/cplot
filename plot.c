@@ -92,13 +92,13 @@ void draw_gnuplot(gnuplot * plt) {
 		char * argus;
 		concat_args(&argus, plt->datas[i].gplot_args, plt->datas[i].nargs);
 		if (0 > asprintf(
-					&tocat,
-					"[i=1:%d] '+' using (%c[i]):(%c[i]) %s",
-					di,
-					'a' + i,
-					'A' + i,
-					argus)
-				)
+				&tocat,
+				"[i=1:%d] '+' using (%c[i]):(%c[i]) %s",
+				di,
+				'a' + i,
+				'A' + i,
+				argus)
+			)
 			return;
 		stri = (char*) realloc(stri, (strlen(stri) + strlen(tocat) + 1) * sizeof(char));
 		strcat(stri, tocat);
