@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdarg.h>
 #include <string.h>
 #include "plot.h"
 
@@ -91,8 +92,18 @@ void draw_gnuplot(gnuplot * plt) {
 		char * tocat;
 		char * argus;
 		concat_args(&argus, plt->datas[i].gplot_args, plt->datas[i].nargs);
-		if (0 > asprintf(
-				&tocat,
+		
+		int s_size = snprintf(NULL, 0, 
+				"[i=1:%d] '+' using (%c[i]):(%c[i]) %s",
+				di,
+				'a' + i,
+				'A' + i,
+				argus);
+		tocat = malloc(s_size + 1);
+
+		if (0 > snprintf(
+				tocat,
+				s_size + 1,
 				"[i=1:%d] '+' using (%c[i]):(%c[i]) %s",
 				di,
 				'a' + i,
@@ -100,6 +111,7 @@ void draw_gnuplot(gnuplot * plt) {
 				argus)
 			)
 			return;
+
 		stri = (char*) realloc(stri, (strlen(stri) + strlen(tocat) + 1) * sizeof(char));
 		strcat(stri, tocat);
 		free(tocat);

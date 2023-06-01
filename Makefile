@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -lm -D _GNU_SOURCE
+CFLAGS = -lm
 main:
 	$(CC) $(CFLAGS) -o main main.c plot.c num.c
 
