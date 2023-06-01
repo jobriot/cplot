@@ -47,8 +47,8 @@ void set_margins(gnuplot * plt) {
 			if (plt->datas[i].y[j] < ymin) ymin = plt->datas[i].y[j];
 		}
 	}
-	double margin_x = (xmax - xmin) * (5 / 100.0);
-	double margin_y = (ymax - ymin) * (5 / 100.0);
+	double margin_x = (xmax - xmin) * (5 / 100.);
+	double margin_y = (ymax - ymin) * (5 / 100.);
 	fprintf(plt->process, "set xr [%f:%f]\n", xmin - margin_x, xmax + margin_x);
 	fprintf(plt->process, "set yr [%f:%f]\n", ymin - margin_y, ymax + margin_y);
 }
