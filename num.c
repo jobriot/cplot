@@ -16,7 +16,7 @@ double * linspace(double start, double end, int num) {
 	return toret;
 }
 
-double * apply_func(double * x, int dim, double func()) {
+double * apply_func(double * x, int dim, double func(double)) {
 	double * toret = malloc(dim * sizeof(double));
 	for (int i=0; i<dim; i++)
 		toret[i] = func(x[i]);
