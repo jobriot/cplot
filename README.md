@@ -17,6 +17,7 @@ To use :
 int dimr = 50;
 
 double * xr = linspace(-3, 3, dimr);
+// applies normal_cr (normal density, σ=1 μ=0) to every element of xr
 double * yr = apply_func(xr, dimr, normal_cr);
 
 gnuplot * plt = instanciatePlot();
