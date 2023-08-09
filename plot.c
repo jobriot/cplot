@@ -105,7 +105,6 @@ void draw_gnuplot(gnuplot * plt) {
 			vname[j] = 'a' + (i / intpow(26, j)) % 26;
 			Vname[j] = 'A' + (i / intpow(26, j)) % 26;
 		}
-		printf("%.*s\n", NAME_LENGTH, vname);
 
 		fprintf(plt->process, "array %.*s[%d]\n", NAME_LENGTH, vname, di);
 		fprintf(plt->process, "array %.*s[%d]\n", NAME_LENGTH, Vname, di);
