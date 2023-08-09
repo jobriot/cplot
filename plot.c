@@ -4,6 +4,8 @@
 #include <string.h>
 #include "plot.h"
 
+#define NAME_LENGTH 5
+
 gnuplot * instanciatePlot() {
 	gnuplot * ret = (gnuplot *) malloc(sizeof(gnuplot));
 	ret->process = popen("gnuplot -persistent 2>/dev/null", "w");
@@ -75,6 +77,20 @@ void add_arg(struct data * source, char * arg) {
 	strcpy(source->gplot_args[n-1], arg);
 }
 
+int intpow(int b, int e) {
+	int res = 1;
+	for (;;) {
+		if (e & 1)
+			res *= b;
+		e >>= 1;
+		if (!e)
+			break;
+		b *= b;
+	}
+	
+	return res;
+}
+
 void draw_gnuplot(gnuplot * plt) {
 	char * beg = "plot sample ";
 	char * sep = ", ";
@@ -83,31 +99,43 @@ void draw_gnuplot(gnuplot * plt) {
 	strcpy(stri, beg);
 	for (int i=0; i<plt->nb_data; i++) {
 		int di = plt->datas[i].dimension;
-		fprintf(plt->process, "array %c[%d]\n", 'a' + i, di);
-		fprintf(plt->process, "array %c[%d]\n", 'A' + i, di);
+
+		char vname[NAME_LENGTH], Vname[NAME_LENGTH];
+		for (int j=0; j<NAME_LENGTH; j++) {
+			vname[j] = 'a' + (i / intpow(26, j)) % 26;
+			Vname[j] = 'A' + (i / intpow(26, j)) % 26;
+		}
+		printf("%.*s\n", NAME_LENGTH, vname);
+
+		fprintf(plt->process, "array %.*s[%d]\n", NAME_LENGTH, vname, di);
+		fprintf(plt->process, "array %.*s[%d]\n", NAME_LENGTH, Vname, di);
 		for (int j=0; j<di; j++) {
-			fprintf(plt->process, "%c[%d]=%f\n", 'a' + i, j + 1, plt->datas[i].x[j]);
-			fprintf(plt->process, "%c[%d]=%f\n", 'A' + i, j + 1, plt->datas[i].y[j]);
+			fprintf(plt->process, "%.*s[%d]=%f\n", NAME_LENGTH, vname, j + 1, plt->datas[i].x[j]);
+			fprintf(plt->process, "%.*s[%d]=%f\n", NAME_LENGTH, Vname, j + 1, plt->datas[i].y[j]);
 		}
 		char * tocat;
 		char * argus;
 		concat_args(&argus, plt->datas[i].gplot_args, plt->datas[i].nargs);
 		
 		int s_size = snprintf(NULL, 0, 
-				"[i=1:%d] '+' using (%c[i]):(%c[i]) %s",
+				"[i=1:%d] '+' using (%.*s[i]):(%.*s[i]) %s",
 				di,
-				'a' + i,
-				'A' + i,
+				NAME_LENGTH,
+				vname,
+				NAME_LENGTH,
+				Vname,
 				argus);
 		tocat = malloc(s_size + 1);
 
 		if (0 > snprintf(
 				tocat,
 				s_size + 1,
-				"[i=1:%d] '+' using (%c[i]):(%c[i]) %s",
+				"[i=1:%d] '+' using (%.*s[i]):(%.*s[i]) %s",
 				di,
-				'a' + i,
-				'A' + i,
+				NAME_LENGTH,
+				vname,
+				NAME_LENGTH,
+				Vname,
 				argus)
 			)
 			return;
