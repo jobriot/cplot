@@ -1,3 +1,6 @@
+#ifndef NUMH
+#define NUMH
+
 double * linspace(double, double, int);
 double * apply_func(double *, int, double ());
 double normal(double, double, double);
@@ -16,3 +19,5 @@ typedef struct _BIN {
 
 BIN bin(double *, int, int);
 void norm_bin(BIN *);
+
+#endif
