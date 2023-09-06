@@ -52,8 +52,8 @@ void set_margins(gnuplot * plt) {
 	}
 	double margin_x = (xmax - xmin) * (5 / 100.);
 	double margin_y = (ymax - ymin) * (5 / 100.);
-	fprintf(plt->process, "set xr [%f:%f]\n", xmin - margin_x, xmax + margin_x);
-	fprintf(plt->process, "set yr [%f:%f]\n", ymin - margin_y, ymax + margin_y);
+	fprintf(plt->process, "set xr [%.20e:%.20e]\n", xmin - margin_x, xmax + margin_x);
+	fprintf(plt->process, "set yr [%.20e:%.20e]\n", ymin - margin_y, ymax + margin_y);
 }
 
 void concat_args(char ** dest, char ** source, int nsource) {
@@ -109,8 +109,8 @@ void draw_gnuplot(gnuplot * plt) {
 		fprintf(plt->process, "array %.*s[%d]\n", NAME_LENGTH, vname, di);
 		fprintf(plt->process, "array %.*s[%d]\n", NAME_LENGTH, Vname, di);
 		for (int j=0; j<di; j++) {
-			fprintf(plt->process, "%.*s[%d]=%f\n", NAME_LENGTH, vname, j + 1, plt->datas[i].x[j]);
-			fprintf(plt->process, "%.*s[%d]=%f\n", NAME_LENGTH, Vname, j + 1, plt->datas[i].y[j]);
+			fprintf(plt->process, "%.*s[%d]=%.20e\n", NAME_LENGTH, vname, j + 1, plt->datas[i].x[j]);
+			fprintf(plt->process, "%.*s[%d]=%.20e\n", NAME_LENGTH, Vname, j + 1, plt->datas[i].y[j]);
 		}
 		char * tocat;
 		char * argus;
